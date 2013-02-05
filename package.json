@@ -1,0 +1,26 @@
+{
+    "name": "light.js",
+    "version": "0.0.1",
+    "author": "xandy <xandy@hackerspace-bamberg.de>",
+    "description": "an advanced controller for ola",
+    "contributors": [
+        {
+            "name": "xandy",
+            "email": "xandy@hackerspace-bamberg.de"
+        }
+    ],
+    "main": "./light.js",
+    "repository": {
+    },
+    "keywords": [
+        "dmx"
+    ],
+    "dependencies" : {
+        "artnet": "https://github.com/ydnax/artnet-node/tarball/master",
+        "q" : ">=0.8.12",
+        "socket.io" : ">=0.9.13"
+    },
+    "engine": {
+        "node": ">=0.9"
+    }
+}

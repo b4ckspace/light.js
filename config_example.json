@@ -1,0 +1,46 @@
+{
+    "config" : {
+        "host" : "localhost",
+        "port" : "",
+        "frontends" : ["socketio"]
+    },
+    "rooms" : {
+        "room 1" : [
+            {   "type" : "rgb",
+                "name" : "ledbar 1 left",
+                "channel" : 78,
+                "modechannel" : 0,
+                "mode" : 41,
+                "r" : 2,
+                "g" : 3,
+                "b" : 4 },
+            {   "type" : "rgb",
+                "name" : "ledbar 1 middle",
+                "channel" : 83,
+                "modechannel" : -1,
+                "mode" : 41,
+                "r" : 2,
+                "g" : 3,
+                "b" : 4 },
+            {   "type" : "rgb",
+                "name" : "ledbar 1 right",
+                "channel" : 86,
+                "modechannel" : -1,
+                "mode" : 41,
+                "r" : 2,
+                "g" : 3,
+                "b" : 4 }
+        ],
+        "room 2" : [
+            {   "type" : "rgb",
+                "name" : "another device",
+                "channel" : 10,
+                "modechannel": -1,
+                "mode" : -1,
+                "r" : 0,
+                "g" : 1,
+                "b" :2
+            }
+        ]
+    }
+}
