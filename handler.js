@@ -38,11 +38,11 @@ Handler.prototype.get_roomstatus = function(roomname) {
 
 Handler.prototype.change_device = function(roomname, devicename, data) {
     var dev = this.rooms[roomname][devicename];
-    if(data.r)
+    if(data.r != undefined)
         this.dmx_dta[dev._r] = data.r;
-    if(data.g)
+    if(data.g != undefined)
         this.dmx_dta[dev._g] = data.b;
-    if(data.b)
+    if(data.b != undefined)
         this.dmx_dta[dev._b] = data.b;
 };
 
