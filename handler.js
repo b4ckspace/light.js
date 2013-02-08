@@ -9,7 +9,7 @@ var Handler = function(controller,rooms, cfg){
     this.exposed_functions = [  "get_rooms", "get_devices", "get_devicestatus",
                                 "change_device", "change_some", "change_all", "change_room",
                                 "sync_all", "set_priority",
-                                "has_controll", "get_controll", "can_get_controll", "release_controll"];
+                                "has_control", "get_control", "can_get_control", "release_control"];
 };
 
 Handler.prototype.get_rooms = function() {
@@ -75,23 +75,23 @@ Handler.prototype.set_priority = function(priority, pass) {
     this.priority = priority;
 };
 
-Handler.prototype.has_controll = function(roomname) {
-    return this.controller.handler_has_controll(roomname,this)
+Handler.prototype.has_control = function(roomname) {
+    return this.controller.handler_has_control(roomname,this)
 };
 
-Handler.prototype.get_controll = function(roomname) {
-    this.controller.handler_get_controll(roomname, this.priority, this)
+Handler.prototype.get_control = function(roomname) {
+    this.controller.handler_get_control(roomname, this.priority, this)
 };
 
-Handler.prototype.can_get_controll = function(roomname) {
+Handler.prototype.can_get_control = function(roomname) {
     var values = {low:0, medium:1, high:2};
-    var prio = values[this.controller.handler_get_priority_controll()];
+    var prio = values[this.controller.handler_get_priority_control()];
     var my_priority = values[this.priority];
     return my_priority >= prio;
 };
 
-Handler.prototype.release_controll = function(roomname) {
-    this.controller.handler_release_controll(roomname, this.priority, this);
+Handler.prototype.release_control = function(roomname) {
+    this.controller.handler_release_control(roomname, this.priority, this);
 };
 
 Handler.prototype.client_exit = function() {

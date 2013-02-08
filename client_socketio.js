@@ -5,7 +5,7 @@ var socket_client = require('socket.io-client')
 var api_functions = [   "get_rooms", "get_devices", "get_devicestatus",
                         "change_device", "change_some", "change_all", "change_room",
                         "sync_all", "set_priority",
-                        "has_controll", "get_controll", "can_get_controll", "release_controll"];
+                        "has_control", "get_control", "can_get_control", "release_control"];
 
 var Client = function(url){
     events.EventEmitter.call(this);

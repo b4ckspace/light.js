@@ -16,7 +16,7 @@ get all devicenames in a room
 
 ### get_devicestatus `roomname, devicename` -> `color`
 get the color of a device. note:
-> if you want to query a room that you currently dont't have controll, don't forget to call **sync_all**
+> if you want to query a room that you currently dont't have control, don't forget to call **sync_all**
 
 ## change functions
 
@@ -32,23 +32,23 @@ set all devices in the room to the color
 ### change_room `roomname {devicename->color}` -> `nothing`
 
 
-## controll functions
-### has_controll `roomname` -> `bool`
+## control functions
+### has_control `roomname` -> `bool`
 _false_ if there is another client in a higher priority queue or one before the client in it's queue
 
 _true_ otherwise
 
 
-### get_controll `roomname` -> `nothing`
+### get_control `roomname` -> `nothing`
 puts the client at the beginning of its priority queue
 
-### can\_get_controll `roomname` -> `bool`
+### can\_get_control `roomname` -> `bool`
 _true_ if there is no client in a higher priority
 
 _false_ otherwise
 
 
-### release_controll `roomname` -> `nothing`
+### release_control `roomname` -> `nothing`
 release the contoll to the next client in the current priority or the one in the lower priority.
 if there are no more clients, the server just displays the last status.
 

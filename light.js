@@ -97,12 +97,11 @@ Controller.prototype.update = function() {
         }
     }
     this.client.send(this.dmx_dta);
-    // print_array(this.dmx_dta);
     var that = this;
-    setTimeout(function(){that.update()}, 100); // ~60fps
+    setTimeout(function(){that.update()}, 100);
 };
 
-Controller.prototype.handler_has_controll = function(roomname, handler) {
+Controller.prototype.handler_has_control = function(roomname, handler) {
     var prios = ["high", "medium", "low"];
     for(var i in prios){
         var prio = prios[i]
@@ -115,7 +114,7 @@ Controller.prototype.handler_has_controll = function(roomname, handler) {
         }
     }
 };
-Controller.prototype.handler_get_priority_controll = function(roomname) {
+Controller.prototype.handler_get_priority_control = function(roomname) {
     var prios = ["high", "medium", "low"];
     for(var i in prios){
         var prio = prios[i]
@@ -124,19 +123,19 @@ Controller.prototype.handler_get_priority_controll = function(roomname) {
     }
     return "low"
 };
-Controller.prototype.handler_get_controll = function(roomname, prio, handler) {
-    this.handler_release_controll(roomname, prio, handler)
+Controller.prototype.handler_get_control = function(roomname, prio, handler) {
+    this.handler_release_control(roomname, prio, handler)
     this.queues[roomname][prio].push(handler);
 
 };
-Controller.prototype.handler_release_controll = function(roomname, prio, handler) {
+Controller.prototype.handler_release_control = function(roomname, prio, handler) {
     this.queues[roomname][prio] = array_remove(this.queues[roomname][prio], (handler));
 };
 
 Controller.prototype.handler_exit = function(handler){
     for(var room in this.queues){
         for(var prio in this.queues[room]){
-            this.handler_release_controll(room, prio, handler)
+            this.handler_release_control(room, prio, handler)
         }
     }
 };

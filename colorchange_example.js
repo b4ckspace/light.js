@@ -26,7 +26,7 @@ client.on('ready', function() {
     .then(function(devices){
         devnames = devices;
         var deferred = Q.defer();
-        client.get_controll(roomname, function() {
+        client.get_control(roomname, function() {
             deferred.resolve()
         });
         return deferred.promise;
