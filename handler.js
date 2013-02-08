@@ -67,9 +67,10 @@ Handler.prototype.sync_all = function() {
 };
 
 Handler.prototype.set_priority = function(priority, pass) {
-    if( (priority=="high")&&(pass!=this.cfg["priority pass"])
+    if( (priority=="high")&&(pass!=this.cfg["priority pass"]))
         throw "wrong priority password";
-    if(! (priority in ["low", "medium", "high"]))
+    console.log(priority)
+    if(["low", "medium", "high"].indexOf(priority)==-1)
         throw "no valid priority";
     this.priority = priority;
 };
