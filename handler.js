@@ -8,7 +8,7 @@ var Handler = function(controller,rooms, cfg){
     this.priority = "medium";
     this.exposed_functions = [  "get_rooms", "get_devices", "get_devicestatus",
                                 "change_device", "change_some", "change_all", "change_room",
-                                "sync_all", "setPriority",
+                                "sync_all", "set_priority",
                                 "has_controll", "get_controll", "can_get_controll", "release_controll"];
 };
 
@@ -66,7 +66,7 @@ Handler.prototype.sync_all = function() {
     this.dmx_dta = this.controller.dmx_dta.slice(0)
 };
 
-Handler.prototype.setPriority = function(priority, pass) {
+Handler.prototype.set_priority = function(priority, pass) {
     if( (priority=="high")&&(pass!=this.cfg["priority pass"])
         throw "wrong priority password";
     if(! (priority in ["low", "medium", "high"]))
