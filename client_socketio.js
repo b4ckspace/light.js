@@ -4,7 +4,7 @@ var socket_client = require('socket.io-client')
 
 var api_functions = [   "get_rooms", "get_devices", "get_devicestatus",
                         "change_device", "change_some", "change_all", "change_room",
-                        "sync_all",
+                        "sync_all", "setPriority",
                         "has_controll", "get_controll", "can_get_controll", "release_controll"];
 
 var Client = function(url){

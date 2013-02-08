@@ -2,7 +2,8 @@
     "config" : {
         "host" : "localhost",
         "port" : "",
-        "frontends" : ["socketio"]
+        "frontends" : ["socketio"],
+        "priority pass" : "i am important"
     },
     "rooms" : {
         "room 1" : [

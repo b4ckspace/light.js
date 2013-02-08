@@ -1,13 +1,14 @@
 var Handler = function(controller,rooms, cfg){
     this.controller = controller;
     this.rooms = rooms;
+    this.cfg = cfg;
     this.dmx_dta = new Array(512);
     for(var i=0;i<512;i++)
         this.dmx_dta[i]=0;
     this.priority = "medium";
     this.exposed_functions = [  "get_rooms", "get_devices", "get_devicestatus",
                                 "change_device", "change_some", "change_all", "change_room",
-                                "sync_all",
+                                "sync_all", "setPriority",
                                 "has_controll", "get_controll", "can_get_controll", "release_controll"];
 };
 
@@ -63,6 +64,14 @@ Handler.prototype.change_some = function(roomname, devnames, value) {
 
 Handler.prototype.sync_all = function() {
     this.dmx_dta = this.controller.dmx_dta.slice(0)
+};
+
+Handler.prototype.setPriority = function(priority, pass) {
+    if( (priority=="high")&&(pass!=this.cfg["priority pass"])
+        throw "wrong priority password";
+    if(! (priority in ["low", "medium", "high"]))
+        throw "no valid priority";
+    this.priority = priority;
 };
 
 Handler.prototype.has_controll = function(roomname) {
