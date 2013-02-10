@@ -48,6 +48,7 @@ var Controller = function(cfg){
     this.rooms = cfg.rooms;
     this.cfg = cfg.config;
     this.queues = {};
+    this.version = "0.0.2";
     for(var room in this.rooms){
         this.queues[room] = {   low:[],
                                 medium:[],

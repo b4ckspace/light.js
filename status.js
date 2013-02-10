@@ -7,6 +7,14 @@ var client = new api('http://localhost:8012');
 client.on('ready', function(){
     Q.fcall(function(){
         var deferred = Q.defer();
+        client.get_version(function(version){
+            console.log('connected to light.js version %s', version)
+            deferred.resolve()
+        });
+        return deferred.promise;
+    })
+    .then(function(){
+        var deferred = Q.defer();
         client.sync_all(function(){
             deferred.resolve()
         });

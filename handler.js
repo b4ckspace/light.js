@@ -8,7 +8,7 @@ var Handler = function(controller,rooms, cfg){
     this.priority = "medium";
     this.exposed_functions = [  "get_rooms", "get_devices", "get_devicestatus",
                                 "change_device", "change_some", "change_all", "change_room",
-                                "sync_all", "set_priority",
+                                "sync_all", "set_priority", "get_version",
                                 "has_control", "get_control", "can_get_control", "release_control"];
 };
 
@@ -73,6 +73,10 @@ Handler.prototype.set_priority = function(priority, pass) {
     if(["low", "medium", "high"].indexOf(priority)==-1)
         throw "no valid priority";
     this.priority = priority;
+};
+
+Handler.prototype.get_version = function() {
+    return this.controller.version;
 };
 
 Handler.prototype.has_control = function(roomname) {

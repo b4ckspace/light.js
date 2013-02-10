@@ -60,5 +60,8 @@ or for incremental updates via **change_device**
 ### set_priority `priority[, password]` -> `nothing`
 set the client's priority, if set in the config, a password is needed for high priority.
 
+### get_version `nothing` -> `version string`
+get the running light.js version
+
 ## configuration file
 comming soon
