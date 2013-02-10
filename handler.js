@@ -41,7 +41,7 @@ Handler.prototype.change_device = function(roomname, devicename, data) {
     if(data.r != undefined)
         this.dmx_dta[dev._r] = data.r;
     if(data.g != undefined)
-        this.dmx_dta[dev._g] = data.b;
+        this.dmx_dta[dev._g] = data.g;
     if(data.b != undefined)
         this.dmx_dta[dev._b] = data.b;
 };
