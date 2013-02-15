@@ -8,7 +8,7 @@ var Handler = function(controller,rooms, cfg){
     this.priority = "medium";
     this.exposed_functions = [  "get_rooms", "get_devices", "get_devicestatus",
                                 "change_device", "change_some", "change_all", "change_room",
-                                "sync_all", "set_priority", "get_version",
+                                "sync_all", "sync_room", "set_priority", "get_version",
                                 "has_control", "get_control", "can_get_control", "release_control"];
 };
 
@@ -99,6 +99,19 @@ Handler.prototype.change_some = function(roomname, devnames, value) {
 
 Handler.prototype.sync_all = function() {
     this.dmx_dta = this.controller.dmx_dta.slice(0)
+};
+
+Handler.prototype.sync_room = function(roomname) {
+    this.validate_room(roomname);
+    for(var devn in this.rooms[roomname]){
+        var dev = this.rooms[roomname][devn];
+        var _r = dev._r;
+        var _g = dev._g;
+        var _b = dev._b;
+        this.dmx_dta[_r] = this.controller.dmx_dta[_r];
+        this.dmx_dta[_g] = this.controller.dmx_dta[_g];
+        this.dmx_dta[_b] = this.controller.dmx_dta[_b];
+    }
 };
 
 Handler.prototype.set_priority = function(priority, pass) {

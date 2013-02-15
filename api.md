@@ -57,6 +57,10 @@ if there are no more clients, the server just displays the last status.
 syncs all rooms to the client's status. used to query status via **get\_device_status**
 or for incremental updates via **change_device**
 
+### sync_roomname `roomname` -> `nothing`
+syncs the room's current status to the client's status. used to query status via **get\_device_status**
+or for incremental updates via **change_device**
+
 ### set_priority `priority[, password]` -> `nothing`
 set the client's priority, if set in the config, a password is needed for high priority.
 
