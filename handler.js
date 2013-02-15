@@ -16,11 +16,26 @@ Handler.prototype.get_rooms = function() {
     return Object.keys(this.rooms)
 };
 
+Handler.prototype.validate_room = function(roomname) {
+    if(this.rooms[roomname]==undefined)
+        throw { known_error : true,
+                reason : "unknown room '" + roomname + "'"};
+};
+
+Handler.prototype.validate_device = function(roomname, devicename) {
+    this.validate_room(roomname);
+    if(this.rooms[roomname][devicename]==undefined)
+        throw { known_error : true,
+                reason : "unknown device '" + devicename + "' in room '" + roomname + "'"};
+};
+
 Handler.prototype.get_devices = function(roomname) {
+    this.validate_room(roomname);
     return Object.keys(this.rooms[roomname])
 };
 
 Handler.prototype.get_devicestatus = function(roomname, devicename){
+    this.validate_device(roomname, devicename);
     var dev = this.rooms[roomname][devicename];
     var r = this.dmx_dta[dev._r];
     var g = this.dmx_dta[dev._g];
@@ -29,6 +44,7 @@ Handler.prototype.get_devicestatus = function(roomname, devicename){
 };
 
 Handler.prototype.get_roomstatus = function(roomname) {
+    this.validate_room(roomname);
     var status={};
     for(var devname in this.rooms[roomname]){
         status[devname] = this.get_devicestatus(room, devname);
@@ -37,6 +53,7 @@ Handler.prototype.get_roomstatus = function(roomname) {
 };
 
 Handler.prototype.change_device = function(roomname, devicename, data) {
+    this.validate_device(roomname, devicename);
     var dev = this.rooms[roomname][devicename];
     if(data.r != undefined)
         this.dmx_dta[dev._r] = data.r;
@@ -46,17 +63,20 @@ Handler.prototype.change_device = function(roomname, devicename, data) {
         this.dmx_dta[dev._b] = data.b;
 };
 
-Handler.prototype.change_room = function(roomname, data) { // device -> value
+Handler.prototype.change_room = function(roomname, data) {
+    this.validate_room(roomname);
      for(var devname in data){
         this.change_device(devname, data[devname])
      }
 };
 
-Handler.prototype.change_all = function(roomname, value) { // value for all
+Handler.prototype.change_all = function(roomname, value) {
+    this.validate_room(roomname);
     this.change_some(roomname, this.get_devices(roomname), value)
 };
 
 Handler.prototype.change_some = function(roomname, devnames, value) {
+    this.validate_room(roomname);
     for(var i in devnames){
       this.change_device(roomname, devnames[i], value)
     };
@@ -68,10 +88,12 @@ Handler.prototype.sync_all = function() {
 
 Handler.prototype.set_priority = function(priority, pass) {
     if( (priority=="high")&&(pass!=this.cfg["priority pass"]))
-        throw "wrong priority password";
+        throw { known_error : true,
+                reason : "wrong priority password"};
     console.log(priority)
     if(["low", "medium", "high"].indexOf(priority)==-1)
-        throw "no valid priority";
+        throw { known_error : true,
+                reason : "unknown priority"};
     this.priority = priority;
 };
 
@@ -80,14 +102,17 @@ Handler.prototype.get_version = function() {
 };
 
 Handler.prototype.has_control = function(roomname) {
+    this.validate_room(roomname);
     return this.controller.handler_has_control(roomname,this)
 };
 
 Handler.prototype.get_control = function(roomname) {
+    this.validate_room(roomname);
     this.controller.handler_get_control(roomname, this.priority, this)
 };
 
 Handler.prototype.can_get_control = function(roomname) {
+    this.validate_room(roomname);
     var values = {low:0, medium:1, high:2};
     var prio = values[this.controller.handler_get_priority_control()];
     var my_priority = values[this.priority];
@@ -95,6 +120,7 @@ Handler.prototype.can_get_control = function(roomname) {
 };
 
 Handler.prototype.release_control = function(roomname) {
+    this.validate_room(roomname);
     this.controller.handler_release_control(roomname, this.priority, this);
 };
 
