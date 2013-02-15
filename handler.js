@@ -29,6 +29,17 @@ Handler.prototype.validate_device = function(roomname, devicename) {
                 reason : "unknown device '" + devicename + "' in room '" + roomname + "'"};
 };
 
+Handler.prototype.validate_color = function(value) {
+    value = parseInt(value, 10);
+    if(value<0)
+        throw { known_error : true,
+                reason : "color must be equal or greater 0"};
+    if(value>255)
+        throw { known_error : true,
+                reason : "color must be equal or smaller 255"};
+    return value;
+};
+
 Handler.prototype.get_devices = function(roomname) {
     this.validate_room(roomname);
     return Object.keys(this.rooms[roomname])
@@ -55,12 +66,16 @@ Handler.prototype.get_roomstatus = function(roomname) {
 Handler.prototype.change_device = function(roomname, devicename, data) {
     this.validate_device(roomname, devicename);
     var dev = this.rooms[roomname][devicename];
-    if(data.r != undefined)
-        this.dmx_dta[dev._r] = data.r;
-    if(data.g != undefined)
-        this.dmx_dta[dev._g] = data.g;
-    if(data.b != undefined)
-        this.dmx_dta[dev._b] = data.b;
+    var value;
+    if((value = data.r) != undefined){
+        this.dmx_dta[dev._r] = this.validate_color(value);
+    }
+    if((value = data.g) != undefined){
+        this.dmx_dta[dev._g] = this.validate_color(value);
+    }
+    if((value = data.b) != undefined){
+        this.dmx_dta[dev._b] = this.validate_color(value);
+    }
 };
 
 Handler.prototype.change_room = function(roomname, data) {
