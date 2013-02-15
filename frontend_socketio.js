@@ -17,8 +17,10 @@ module.exports.start=function(controller) {
                 try{
                     res = client[cmd].apply(client, args);
                 }catch(e) {
+                    if(!e.known_error)
+                        throw e;
                     error = true;
-                    reason = e;
+                    reason = e.reason;
                     console.log(arguments)
                     console.log(e)
                 }
