@@ -77,6 +77,7 @@ var Controller = function(cfg){
 
     process.on( 'SIGUSR2', function() {
         that.generate_save();
+        process.exit();
     });
     process.on( 'SIGINT', function() {
         that.generate_save();
