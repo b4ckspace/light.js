@@ -65,12 +65,19 @@ var Controller = function(cfg){
             this.dmx_dta[device._b] = 255;
         }
     }
+    this.apply_save();
     for(var i in this.cfg.frontends){
         console.log("Starting frontend %s", this.cfg.frontends[i])
         var frontend = require("./frontend_" + this.cfg.frontends[i]);
         frontend.start(this);
     }
     this.update();
+
+    var that=this;
+    process.on( 'SIGINT', function() {
+        that.generate_save();
+        process.exit();
+    });
 };
 
 Controller.prototype.create_handler = function() {
@@ -102,6 +109,41 @@ Controller.prototype.update = function() {
     setTimeout(function(){that.update()}, 100);
 };
 
+Controller.prototype.generate_save = function() {
+    var dta = {};
+    for(var room in this.rooms){
+        for(var devicename in this.rooms[room]){
+            var device = this.rooms[room][devicename];
+            var key = [room, devicename, device.type].join('|||');
+            var rgb = {
+                r: this.dmx_dta[device._r],
+                g: this.dmx_dta[device._g],
+                b: this.dmx_dta[device._b]
+            };
+            dta[key] = rgb;
+        }
+    }
+    console.log("writing current light status to disk");
+    fs.writeFileSync("lightcache.json", JSON.stringify(dta));
+};
+
+Controller.prototype.apply_save = function() {
+    if(!fs.existsSync("lightcache.json"))
+        return;
+    console.log("restoring previous light settings");
+    var data = JSON.parse(fs.readFileSync("lightcache.json"));
+    for(var room in this.rooms){
+        for(var devicename in this.rooms[room]){
+            var device = this.rooms[room][devicename];
+            var key = [room, devicename, device.type].join('|||');
+            if(!data[key])
+                continue;
+            this.dmx_dta[device._r] = data[key].r;
+            this.dmx_dta[device._g] = data[key].g;
+            this.dmx_dta[device._b] = data[key].b;
+        }
+    }
+};
 Controller.prototype.handler_has_control = function(roomname, handler) {
     var prios = ["high", "medium", "low"];
     for(var i in prios){
