@@ -75,11 +75,15 @@ var Controller = function(cfg){
 
     var that=this;
 
-    process.on( 'SIGUSR2', function() {
+    process.on('SIGUSR2', function() {
         that.generate_save();
         process.exit();
     });
-    process.on( 'SIGINT', function() {
+    process.on('SIGTERM', function() {
+        that.generate_save();
+        process.exit();
+    });
+    process.on('SIGINT', function() {
         that.generate_save();
         process.exit();
     });
